@@ -1,3 +1,4 @@
+students =[]
 def  main():
     while True:
         print("="*30)
@@ -12,7 +13,12 @@ def  main():
         print("5. Exit")
         choice = input("\nEnter your choice: ")
         if choice == "1":
-            print("Feature coming soon...")
+            name = input("Enter student name: ")
+            roll = int(input("Enter student roll number: "))
+            dep = input("Enter student department: ")
+            grade = input("Enter student grade: ")
+            students.append({"name": name, "grade": grade})
+            print(f"Student {name} added successfully!")
 
         elif choice == "2":
             print("Feature coming soon...")
