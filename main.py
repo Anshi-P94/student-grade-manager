@@ -14,14 +14,25 @@ def  main():
         choice = input("\nEnter your choice: ")
         if choice == "1":
             name = input("Enter student name: ")
-            roll = int(input("Enter student roll number: "))
+            roll = input("Enter student roll number: ")
             dep = input("Enter student department: ")
             grade = input("Enter student grade: ")
-            students.append({"name": name, "grade": grade})
+            students.append({"name": name,"roll": roll,"department": dep,"grade": grade})
             print(f"Student {name} added successfully!")
 
         elif choice == "2":
-            print("Feature coming soon...")
+            if not students:
+                print("\nNo student available.\n")
+            else:
+                count = 1
+                for student in students:
+                    print(f"\nStudent {count}")
+                    print("-" * 20)
+                    print("Name       :",student["name"])
+                    print("Roll No.   :",student["roll"])
+                    print("Department :",student["department1"])
+                    print("Grade      :",student["grade"])
+                    count += 1
 
         elif choice == "3":
             print("Feature coming soon...")
