@@ -30,15 +30,37 @@ def  main():
                     print("-" * 20)
                     print("Name       :",student["name"])
                     print("Roll No.   :",student["roll"])
-                    print("Department :",student["department1"])
+                    print("Department :",student["department"])
                     print("Grade      :",student["grade"])
                     count += 1
 
         elif choice == "3":
-            print("Feature coming soon...")
+            roll_no = input("Roll No. To Be Searched: ")
+            found = False
+            for student in students:
+                if student["roll"]==roll_no:
+                   print("Name       :",student["name"])
+                   print("Roll No.   :",student["roll"])
+                   print("Department :",student["department"])
+                   print("Grade      :",student["grade"])
+
+                   found = True
+                   break
+                if found==False:
+                    print("Student Not Found")
 
         elif choice == "4":
-            print("Feature coming soon...")
+            rollno = input("Roll No. To Be Deleted: ")
+            found = False
+            for student in students:
+                if student["roll"]==rollno:
+                    students.remove(student)
+                    print("Student Deleted Successfully")
+                    
+                    found = True
+                    break
+            if found==False:
+                print("Student Not Found")
 
         elif choice == "5":
             print("Thank you for using Student Grade Manager!")
