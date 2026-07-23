@@ -122,6 +122,54 @@ class StudentManager:
         else:
             print("Student Not Found")
 
+    def statistics(self):
+        if not self.students:
+            print("No students available.")
+            return
+        total_students = len(self.students)
+        average_grade = sum(student["grade"] for student in self.students) / len(self.students)
+        highest = max(self.students, key=lambda student: student["grade"])
+        lowest = min(self.students, key=lambda student: student["grade"])
+        a_grade_students = sum(1 for student in self.students if student["grade"] >= 90)
+        print("=" * 30)
+        print("Student Statistics")
+        print("=" * 30)
+        print("Total Students :", total_students)
+        print("Average Grade  :", round(average_grade, 2))
+        print("Highest Grade  :", highest["grade"])
+        print("Lowest Grade   :", lowest["grade"])
+        print("\nTop Student")
+        print("-" * 20)
+        print("Name             :", highest["name"])
+        print("Roll No.         :", highest["roll"])
+        print("Department       :", highest["department"])
+        print("Grade            :", highest["grade"])
+        print("\nGrade Distribution")
+        print("-" * 20)
+        a = 0
+        b = 0
+        c = 0
+        d = 0
+        f = 0
+        for student in self.students:
+            grade = student["grade"]
+            if grade >= 90:
+                a += 1
+            elif grade >= 80:
+                b += 1
+            elif grade >= 70:
+                c += 1
+            elif grade >= 60:
+                d += 1
+            else:
+                f += 1
+        print("A (90-100):", a)
+        print("B (80-89) :", b)
+        print("C (70-79) :", c)
+        print("D (60-69) :", d)
+        print("F (<60)   :", f)
+        print(f"A Grade Students : ",{a_grade_students})    
+
 manager = StudentManager()
 def main():
     while True:
@@ -134,7 +182,8 @@ def main():
         print("3. Search Student")
         print("4. Delete Student")
         print("5. Update Student")
-        print("6. Exit")
+        print("6. Statistics")
+        print("7. Exit")
 
         choice = input("\nEnter your choice: ")
 
@@ -154,6 +203,9 @@ def main():
             manager.update_student()
 
         elif choice == "6":
+            manager.statistics()
+
+        elif choice == "7":
             print("Thank you for using Student Grade Manager!")
             break
 
