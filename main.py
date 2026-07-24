@@ -1,6 +1,19 @@
+import json
 class StudentManager:
     def __init__(self):
         self.students = []
+        self.load_data()
+
+    def load_data(self):
+        try:
+            with open("students.json","r") as file:
+                self.students = json.load(file)
+        except (FileNotFoundError, json.JSONDecodeError):
+            self.students = []
+
+    def save_data(self):
+        with open("students.json", "w") as file:
+            json.dump(self.students, file, indent=4)
 
     def find_student_by_roll(self, roll):
         for student in self.students:
@@ -23,20 +36,17 @@ class StudentManager:
             if name:
                 break
             print("Name cannot be empty.")
-
         while True:
             roll = input("Enter student roll number: ").strip()
             if self.find_student_by_roll(roll):
                 print("Roll Number already exists. Try again.")
             else:
                 break
-
         while True:
             dep = input("Department: ").strip()
             if dep:
                 break
             print("Department cannot be empty.")
-
         while True:
             grade = input("Enter student grade: ")
             try:
@@ -47,14 +57,13 @@ class StudentManager:
                     print("Grade must be between 0 and 100.")
             except ValueError:
                 print("Please enter a valid number.")
-
         self.students.append({
             "name": name,
             "roll": roll,
             "department": dep,
             "grade": grade
         })
-
+        self.save_data()
         print(f"Student {name} added successfully!")
 
     def view_students(self):
@@ -67,7 +76,6 @@ class StudentManager:
     def search_student(self):
         roll = input("Roll No. To Be Searched: ").strip()
         student = self.find_student_by_roll(roll)
-
         if student:
             self.print_student(student)
         else:
@@ -76,9 +84,9 @@ class StudentManager:
     def delete_student(self):
         roll = input("Roll No. To Be Deleted: ").strip()
         student = self.find_student_by_roll(roll)
-
         if student:
             self.students.remove(student)
+            self.save_data()
             print(f"{student['name']} deleted successfully.")
         else:
             print("Student Not Found")
@@ -86,19 +94,14 @@ class StudentManager:
     def update_student(self):
         roll = input("Enter Roll Number to Update: ").strip()
         student = self.find_student_by_roll(roll)
-
         if student:
             print("\nPress Enter to keep existing value.\n")
-
             name = input(f"Name ({student['name']}): ").strip()
             department = input(f"Department ({student['department']}): ").strip()
-
             while True:
                 grade = input(f"Grade ({student['grade']}): ")
-
                 if grade == "":
                     break
-
                 try:
                     grade = float(grade)
                     if 0 <= grade <= 100:
@@ -107,18 +110,14 @@ class StudentManager:
                         print("Grade must be between 0 and 100.")
                 except ValueError:
                     print("Please enter a valid number.")
-
             if name:
                 student["name"] = name
-
             if department:
                 student["department"] = department
-
             if grade != "":
                 student["grade"] = grade
-
+            self.save_data()
             print("Student Updated Successfully!")
-
         else:
             print("Student Not Found")
 
@@ -168,7 +167,7 @@ class StudentManager:
         print("C (70-79) :", c)
         print("D (60-69) :", d)
         print("F (<60)   :", f)
-        print(f"A Grade Students : ",{a_grade_students})    
+        print(f"A Grade Students : {a_grade_students}")   
 
 manager = StudentManager()
 def main():
